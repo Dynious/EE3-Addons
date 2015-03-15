@@ -40,7 +40,7 @@ public class EE3Addons
         }
         if (Loader.isModLoaded("BuildCraft|Core"))
         {
-            AddonBuildCraft.sendRecipes();
+            //AddonBuildCraft.sendRecipes();
         }
     }
 

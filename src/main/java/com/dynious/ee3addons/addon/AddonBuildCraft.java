@@ -1,12 +1,11 @@
 package com.dynious.ee3addons.addon;
 
 import buildcraft.BuildCraftEnergy;
-import buildcraft.api.recipes.AssemblyRecipe;
-import buildcraft.api.recipes.RefineryRecipes;
-import com.dynious.ee3addons.imc.CommunicationHandler;
-import com.pahimar.ee3.api.OreStack;
-import com.pahimar.ee3.api.WrappedStack;
-import com.pahimar.ee3.emc.EmcValue;
+import buildcraft.api.recipes.BuildcraftRecipeRegistry;
+import buildcraft.api.recipes.IFlexibleRecipe;
+import com.pahimar.ee3.api.EnergyValueRegistryProxy;
+import com.pahimar.ee3.api.RecipeRegistryProxy;
+import com.pahimar.ee3.exchange.OreStack;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -19,21 +18,22 @@ public class AddonBuildCraft
     /**
      * EmcValues for various BC things
      */
-    private static final EmcValue OIL_EMC_VALUE = new EmcValue(1275);
+    private static final int OIL_EMC_VALUE = 1275;
 
     public static void sendValues()
     {
-        CommunicationHandler.sendPreValueAssignment(BuildCraftEnergy.fluidOil, OIL_EMC_VALUE);
+        EnergyValueRegistryProxy.addPreAssignedEnergyValue(BuildCraftEnergy.fluidOil, OIL_EMC_VALUE);
     }
 
+    /*
     @SuppressWarnings("unchecked")
     public static void sendRecipes()
     {
-        for (AssemblyRecipe assemblyRecipe : AssemblyRecipe.assemblyRecipes)
+        for (IFlexibleRecipe<ItemStack> assemblyRecipe : BuildcraftRecipeRegistry.assemblyTable.getRecipes())
         {
             if (assemblyRecipe.output != null)
             {
-                List<WrappedStack> inputs = new ArrayList<WrappedStack>();
+                List<Object> inputs = new ArrayList<Object>();
 
                 Object[] recipeInputs = assemblyRecipe.input;
                 for (int i = 0; i < recipeInputs.length; i++)
@@ -43,17 +43,17 @@ public class AddonBuildCraft
                     {
                         if (input instanceof ItemStack)
                         {
-                            inputs.add(new WrappedStack(input));
+                            inputs.add(input);
                         }
                         else if (input instanceof ArrayList)
                         {
                             ArrayList<ItemStack> ores = (ArrayList<ItemStack>) input;
                             for (ItemStack ore : ores)
                             {
-                                int oreID = OreDictionary.getOreID(ore);
-                                if (oreID != -1)
+                                int[] oreID = OreDictionary.getOreIDs(ore);
+                                if (oreID.length > 0)
                                 {
-                                    inputs.add(new WrappedStack(new OreStack(OreDictionary.getOreName(oreID), (Integer)recipeInputs[i + 1])));
+                                    inputs.add((Integer)recipeInputs[i + 1], new OreStack(ore));
                                     break;
                                 }
                             }
@@ -62,7 +62,7 @@ public class AddonBuildCraft
                 }
                 if (!inputs.isEmpty())
                 {
-                    CommunicationHandler.sendAddRecipe(new WrappedStack(assemblyRecipe.output), inputs);
+                    RecipeRegistryProxy.addRecipe(assemblyRecipe.output, inputs);
                 }
             }
         }
@@ -72,20 +72,21 @@ public class AddonBuildCraft
             FluidStack output = recipe.result;
             if (output != null)
             {
-                List<WrappedStack> inputs = new ArrayList<WrappedStack>();
+                List<Object> inputs = new ArrayList<Object>();
                 if (recipe.ingredient1 != null)
                 {
-                    inputs.add(new WrappedStack(recipe.ingredient1));
+                    inputs.add(recipe.ingredient1);
                 }
                 if (recipe.ingredient2 != null)
                 {
-                    inputs.add(new WrappedStack(recipe.ingredient2));
+                    inputs.add(recipe.ingredient2);
                 }
                 if (!inputs.isEmpty())
                 {
-                    CommunicationHandler.sendAddRecipe(new WrappedStack(output), inputs);
+                    RecipeRegistryProxy.addRecipe(output, inputs);
                 }
             }
         }
     }
+    */
 }

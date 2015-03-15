@@ -21,6 +21,29 @@ minecraft {
 	version = "1.7.10-10.13.2.1307-1.7.10"
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        name = "chickenbones"
+        url = "http://chickenbones.net/maven"
+    }
+    maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to/"
+    }
+	maven {
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: '*.jar')
+	compile "com.pahimar.ee3:EquivalentExchange3:1.7.10-0.2.436:dev"
+	compile "com.mod-buildcraft:buildcraft:6.4.3:dev"
+    compile "net.industrial-craft:industrialcraft-2:2.2.694-experimental:dev"
+}
+
 processResources
 {
     // replace stuff in mcmod.info, nothing else

@@ -1,12 +1,12 @@
 package com.dynious.ee3addons.addon;
 
-import com.dynious.ee3addons.imc.CommunicationHandler;
-import com.pahimar.ee3.api.OreStack;
-import com.pahimar.ee3.api.WrappedStack;
-import com.pahimar.ee3.emc.EmcValue;
-import thermalexpansion.util.crafting.*;
+import cofh.thermalexpansion.util.crafting.*;
+import com.pahimar.ee3.api.EnergyValueRegistryProxy;
+import com.pahimar.ee3.api.RecipeRegistryProxy;
+import com.pahimar.ee3.exchange.OreStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddonThermalExpansion
@@ -14,19 +14,19 @@ public class AddonThermalExpansion
     /**
      * EmcValues for various TE things
      */
-    private static final EmcValue COPPER_EMC_VALUE = new EmcValue(72);
-    private static final EmcValue TIN_EMC_VALUE = new EmcValue(256);
-    private static final EmcValue LEAD_EMC_VALUE = new EmcValue(512);
-    private static final EmcValue SILVER_EMC_VALUE = new EmcValue(1024);
-    private static final EmcValue NICKEL_EMC_VALUE = new EmcValue(2048);
+    private static final int COPPER_EMC_VALUE = 72;
+    private static final int TIN_EMC_VALUE = 256;
+    private static final int LEAD_EMC_VALUE = 512;
+    private static final int SILVER_EMC_VALUE = 1024;
+    private static final int NICKEL_EMC_VALUE = 2048;
 
     public static void sendValues()
     {
-        CommunicationHandler.sendPreValueAssignment(new OreStack("oreCopper"), COPPER_EMC_VALUE);
-        CommunicationHandler.sendPreValueAssignment(new OreStack("oreTin"), TIN_EMC_VALUE);
-        CommunicationHandler.sendPreValueAssignment(new OreStack("oreLead"), LEAD_EMC_VALUE);
-        CommunicationHandler.sendPreValueAssignment(new OreStack("oreSilver"), SILVER_EMC_VALUE);
-        CommunicationHandler.sendPreValueAssignment(new OreStack("oreNickel"), NICKEL_EMC_VALUE);
+        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreCopper"), COPPER_EMC_VALUE);
+        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreTin"), TIN_EMC_VALUE);
+        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreLead"), LEAD_EMC_VALUE);
+        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreSilver"), SILVER_EMC_VALUE);
+        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreNickel"), NICKEL_EMC_VALUE);
     }
 
     public static void sendRecipes()
@@ -35,7 +35,7 @@ public class AddonThermalExpansion
         {
             if (recipePulverizer.getInput() != null && recipePulverizer.getPrimaryOutput() != null)
             {
-                CommunicationHandler.sendAddRecipe(new WrappedStack(recipePulverizer.getPrimaryOutput()), recipePulverizer.getInput());
+                RecipeRegistryProxy.addRecipe(recipePulverizer.getPrimaryOutput(), Arrays.asList(recipePulverizer.getInput()));
             }
         }
 
@@ -43,7 +43,7 @@ public class AddonThermalExpansion
         {
             if (recipeSawmill.getInput() != null && recipeSawmill.getPrimaryOutput() != null)
             {
-                CommunicationHandler.sendAddRecipe(new WrappedStack(recipeSawmill.getPrimaryOutput()), recipeSawmill.getInput());
+                RecipeRegistryProxy.addRecipe(recipeSawmill.getPrimaryOutput(), Arrays.asList(recipeSawmill.getInput()));
             }
         }
 
@@ -51,16 +51,16 @@ public class AddonThermalExpansion
         {
             if (recipeSmelter.getPrimaryOutput() != null)
             {
-                List<WrappedStack> inputs = new ArrayList<WrappedStack>();
+                List<Object> inputs = new ArrayList<Object>();
                 if (recipeSmelter.getPrimaryInput() != null)
                 {
-                    inputs.add(new WrappedStack(recipeSmelter.getPrimaryInput()));
+                    inputs.add(recipeSmelter.getPrimaryInput());
                 }
                 if (recipeSmelter.getSecondaryInput() != null)
                 {
-                    inputs.add(new WrappedStack(recipeSmelter.getSecondaryInput()));
+                    inputs.add(recipeSmelter.getSecondaryInput());
                 }
-                CommunicationHandler.sendAddRecipe(new WrappedStack(recipeSmelter.getPrimaryOutput()), inputs);
+                RecipeRegistryProxy.addRecipe(recipeSmelter.getPrimaryOutput(), inputs);
             }
         }
 
@@ -68,7 +68,7 @@ public class AddonThermalExpansion
         {
             if (recipeCrucible.getInput() != null && recipeCrucible.getOutput() != null)
             {
-                CommunicationHandler.sendAddRecipe(new WrappedStack(recipeCrucible.getOutput()), recipeCrucible.getInput());
+                RecipeRegistryProxy.addRecipe(recipeCrucible.getOutput(), Arrays.asList(recipeCrucible.getInput()));
             }
         }
 
@@ -76,7 +76,7 @@ public class AddonThermalExpansion
         {
             if (recipeTransposer.getInput() != null && recipeTransposer.getOutput() != null)
             {
-                CommunicationHandler.sendAddRecipe(new WrappedStack(recipeTransposer.getOutput()), recipeTransposer.getInput());
+                RecipeRegistryProxy.addRecipe(recipeTransposer.getOutput(), Arrays.asList(recipeTransposer.getInput()));
             }
         }
 
@@ -84,7 +84,15 @@ public class AddonThermalExpansion
         {
             if (recipeTransposer.getInput() != null && recipeTransposer.getOutput() != null)
             {
-                CommunicationHandler.sendAddRecipe(new WrappedStack(recipeTransposer.getOutput()), recipeTransposer.getInput());
+                RecipeRegistryProxy.addRecipe(recipeTransposer.getOutput(), Arrays.asList(recipeTransposer.getInput()));
+            }
+        }
+
+        for (TransposerManager.RecipeTransposer recipeTransposer : TransposerManager.getExtractionRecipeList())
+        {
+            if (recipeTransposer.getInput() != null && recipeTransposer.getOutput() != null)
+            {
+                RecipeRegistryProxy.addRecipe(recipeTransposer.getOutput(), Arrays.asList(recipeTransposer.getInput()));
             }
         }
     }
