@@ -1,0 +1,16 @@
+[
+{
+  "modid": "ee3addons",
+  "name": "EE3 Addons",
+  "description": "Adds mod compatibility to EE3",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Dynious"],
+  "credits": "Dynious for creating this addon and Pahimar for creating EE3",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["ee3"]
+}
+]
