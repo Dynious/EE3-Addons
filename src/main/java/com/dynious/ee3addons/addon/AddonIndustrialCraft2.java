@@ -1,6 +1,5 @@
 package com.dynious.ee3addons.addon;
 
-import com.pahimar.ee3.api.EnergyValueRegistryProxy;
 import com.pahimar.ee3.api.RecipeRegistryProxy;
 import com.pahimar.ee3.exchange.OreStack;
 import ic2.api.recipe.*;
@@ -94,42 +93,43 @@ public class AddonIndustrialCraft2
 
         if (recipe instanceof AdvRecipe)
         {
-            AdvRecipe shapedRecipe = (AdvRecipe) recipe;
-
-            for (int i = 0; i < shapedRecipe.input.length; i++)
+            for (Object object : ((AdvRecipe) recipe).input)
             {
-                if (shapedRecipe.input[i] instanceof ItemStack)
-                {
-                    ItemStack itemStack = ((ItemStack) shapedRecipe.input[i]).copy();
-                    recipeInputs.add(itemStack);
-                }
-                else if (shapedRecipe.input[i] instanceof String)
-                {
-                    OreStack stack = new OreStack((String) shapedRecipe.input[i]);
-                    recipeInputs.add(stack);
-                }
+                addInputToList(recipeInputs, object);
             }
         }
         else if (recipe instanceof AdvShapelessRecipe)
         {
-            AdvShapelessRecipe shapelessRecipe = (AdvShapelessRecipe) recipe;
-
-            for (Object object : shapelessRecipe.input)
+            for (Object object : ((AdvShapelessRecipe) recipe).input)
             {
-                if (object instanceof ItemStack)
-                {
-                    ItemStack itemStack = ((ItemStack) object).copy();
-                    recipeInputs.add(itemStack);
-                }
-                else if (object instanceof String)
-                {
-                    OreStack stack = new OreStack((String) object);
-                    recipeInputs.add(stack);
-                }
+                addInputToList(recipeInputs, object);
             }
         }
 
         return recipeInputs;
+    }
+
+    public static void addInputToList(List<Object> recipeInputs, Object object)
+    {
+        if (object instanceof ItemStack)
+        {
+            ItemStack itemStack = ((ItemStack) object).copy();
+            recipeInputs.add(itemStack);
+        }
+        else if (object instanceof String)
+        {
+            OreStack stack = new OreStack((String) object);
+            recipeInputs.add(stack);
+        }
+        else if (object instanceof IRecipeInput)
+        {
+            if (object instanceof RecipeInputItemStack)
+                recipeInputs.add(((RecipeInputItemStack) object).input);
+            else if (object instanceof RecipeInputOreDict)
+                recipeInputs.add(new OreStack(((RecipeInputOreDict) object).input));
+            else if (object instanceof RecipeInputFluidContainer)
+                recipeInputs.add(new FluidStack(((RecipeInputFluidContainer) object).fluid, ((RecipeInputFluidContainer) object).amount));
+        }
     }
 
     private static void addCannerBottleRecipe(Map.Entry<ICannerBottleRecipeManager.Input, RecipeOutput> entry)

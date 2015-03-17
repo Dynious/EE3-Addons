@@ -34,6 +34,7 @@ public class AddonOres
         EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("dustLithium"), LITHIUM_EMC_VALUE);
         EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("dustSiliconDioxide"), SILICON_DIOXIDE_EMC_VALUE);
 
+        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("itemRubber"), RUBBER_WOOD_EMC_VALUE);
         EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("woodRubber"), RUBBER_WOOD_EMC_VALUE);
     }
 }
