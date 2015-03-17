@@ -2,6 +2,7 @@ package com.dynious.ee3addons;
 
 import com.dynious.ee3addons.addon.AddonBuildCraft;
 import com.dynious.ee3addons.addon.AddonIndustrialCraft2;
+import com.dynious.ee3addons.addon.AddonOres;
 import com.dynious.ee3addons.addon.AddonThermalExpansion;
 import com.dynious.ee3addons.lib.Reference;
 import cpw.mods.fml.common.Loader;
@@ -18,39 +19,22 @@ public class EE3Addons
 
     @Mod.EventHandler
     @SuppressWarnings("unused")
-    public void preInit(FMLPreInitializationEvent event)
+    public void postInit(FMLPostInitializationEvent event)
     {
-        if (Loader.isModLoaded("IC2"))
-        {
-            AddonIndustrialCraft2.sendValues();
-        }
+        //Send Values
+        AddonOres.sendValues();
         if (Loader.isModLoaded("BuildCraft|Core"))
         {
             AddonBuildCraft.sendValues();
         }
-    }
 
-    @Mod.EventHandler
-    @SuppressWarnings("unused")
-    public void init(FMLInitializationEvent event)
-    {
+        //Send recipes
         if (Loader.isModLoaded("IC2"))
         {
             AddonIndustrialCraft2.sendRecipes();
         }
-        if (Loader.isModLoaded("BuildCraft|Core"))
-        {
-            //AddonBuildCraft.sendRecipes();
-        }
-    }
-
-    @Mod.EventHandler
-    @SuppressWarnings("unused")
-    public void postInit(FMLPostInitializationEvent event)
-    {
         if (Loader.isModLoaded("ThermalExpansion"))
         {
-            AddonThermalExpansion.sendValues();
             AddonThermalExpansion.sendRecipes();
         }
     }

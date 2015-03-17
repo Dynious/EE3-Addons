@@ -11,24 +11,6 @@ import java.util.List;
 
 public class AddonThermalExpansion
 {
-    /**
-     * EmcValues for various TE things
-     */
-    private static final int COPPER_EMC_VALUE = 72;
-    private static final int TIN_EMC_VALUE = 256;
-    private static final int LEAD_EMC_VALUE = 512;
-    private static final int SILVER_EMC_VALUE = 1024;
-    private static final int NICKEL_EMC_VALUE = 2048;
-
-    public static void sendValues()
-    {
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreCopper"), COPPER_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreTin"), TIN_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreLead"), LEAD_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreSilver"), SILVER_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreNickel"), NICKEL_EMC_VALUE);
-    }
-
     public static void sendRecipes()
     {
         for (PulverizerManager.RecipePulverizer recipePulverizer :PulverizerManager.getRecipeList())
@@ -76,23 +58,7 @@ public class AddonThermalExpansion
         {
             if (recipeTransposer.getInput() != null && recipeTransposer.getOutput() != null)
             {
-                RecipeRegistryProxy.addRecipe(recipeTransposer.getOutput(), Arrays.asList(recipeTransposer.getInput()));
-            }
-        }
-
-        for (TransposerManager.RecipeTransposer recipeTransposer : TransposerManager.getExtractionRecipeList())
-        {
-            if (recipeTransposer.getInput() != null && recipeTransposer.getOutput() != null)
-            {
-                RecipeRegistryProxy.addRecipe(recipeTransposer.getOutput(), Arrays.asList(recipeTransposer.getInput()));
-            }
-        }
-
-        for (TransposerManager.RecipeTransposer recipeTransposer : TransposerManager.getExtractionRecipeList())
-        {
-            if (recipeTransposer.getInput() != null && recipeTransposer.getOutput() != null)
-            {
-                RecipeRegistryProxy.addRecipe(recipeTransposer.getOutput(), Arrays.asList(recipeTransposer.getInput()));
+                RecipeRegistryProxy.addRecipe(recipeTransposer.getOutput(), Arrays.asList(recipeTransposer.getInput(), recipeTransposer.getFluid()));
             }
         }
     }

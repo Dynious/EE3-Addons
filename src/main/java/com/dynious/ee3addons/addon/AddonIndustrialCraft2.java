@@ -18,32 +18,6 @@ import java.util.Map;
 
 public class AddonIndustrialCraft2
 {
-    /**
-     * EmcValues for various IC2 things
-     */
-    private static final int COPPER_EMC_VALUE = 72;
-    private static final int TIN_EMC_VALUE = 256;
-    private static final int LEAD_EMC_VALUE = 512;
-    private static final int SILVER_EMC_VALUE = 1024;
-    private static final int URANIUM_EMC_VALUE = 4096;
-    private static final int SULFUR_EMC_VALUE = 512;
-    private static final int LITHIUM_EMC_VALUE = 512;
-    private static final int SILICON_DIOXIDE_EMC_VALUE = 256;
-    private static final int RUBBER_WOOD_EMC_VALUE = 24;
-
-    public static void sendValues()
-    {
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreCopper"), COPPER_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreTin"), TIN_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreLead"), LEAD_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreSilver"), SILVER_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("oreUranium"), URANIUM_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("dustSulfur"), SULFUR_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("dustLithium"), LITHIUM_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("dustSiliconDioxide"), SILICON_DIOXIDE_EMC_VALUE);
-        EnergyValueRegistryProxy.addPreAssignedEnergyValue(new OreStack("woodRubber"), RUBBER_WOOD_EMC_VALUE);
-    }
-
     public static void sendRecipes()
     {
         for (Map.Entry<IRecipeInput, RecipeOutput> entry : Recipes.macerator.getRecipes().entrySet())
